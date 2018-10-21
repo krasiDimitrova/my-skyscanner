@@ -1,15 +1,17 @@
 package myskyscanner;
 
-public class myUser {
+import java.util.Arrays;
 
-    String username;
-    char[] password;
-    String email;
-    String firstName;
-    String lastName;
-    String phone;
+public class MyUser {
 
-    public myUser(String username, char[] password, String email, String firstName, String lastName,
+    private String username;
+    private char[] password;
+    private String email;
+    private String firstName;
+    private String lastName;
+    private String phone;
+
+    public MyUser(String username, char[] password, String email, String firstName, String lastName,
             String phone) {
         this.username = username;
         this.password = password;
@@ -31,5 +33,9 @@ public class myUser {
         if (phone != null) {
             System.out.println("Phone" + phone);
         }
+    }
+
+    public boolean validatePass(char[] passToCheck) {
+        return Arrays.equals(password, passToCheck);
     }
 }
