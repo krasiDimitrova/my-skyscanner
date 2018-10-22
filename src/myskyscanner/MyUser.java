@@ -1,9 +1,11 @@
 package myskyscanner;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class MyUser {
+public class MyUser implements Serializable {
 
+    private static final long serialVersionUID = -2043085192957959900L;
     private String username;
     private char[] password;
     private String email;

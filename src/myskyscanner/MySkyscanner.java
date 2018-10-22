@@ -162,11 +162,15 @@ public class MySkyscanner {
                 break;
             }
             case "logout": {
-                logout();
+                if (currentUser != null) {
+                    logout();
+                }
                 break;
             }
             case "deleteMyProfile": {
-                getDeletePass(scanner);
+                if (currentUser != null) {
+                    getDeletePass(scanner);
+                }
                 break;
             }
             case "signUp": {
@@ -174,7 +178,9 @@ public class MySkyscanner {
                 break;
             }
             case "show": {
-                showUserInfo();
+                if (currentUser != null) {
+                    showUserInfo();
+                }
                 break;
             }
             case "print": {
