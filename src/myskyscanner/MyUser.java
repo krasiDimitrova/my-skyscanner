@@ -27,13 +27,13 @@ public class MyUser implements Serializable {
         System.out.println("Username: " + username);
         System.out.println("Email: " + email);
         if (firstName != null) {
-            System.out.println("First name" + firstName);
+            System.out.println("First name " + firstName);
         }
         if (lastName != null) {
-            System.out.println("Last name" + lastName);
+            System.out.println("Last name " + lastName);
         }
         if (phone != null) {
-            System.out.println("Phone" + phone);
+            System.out.println("Phone " + phone);
         }
     }
 

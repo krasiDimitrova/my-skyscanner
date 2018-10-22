@@ -49,7 +49,7 @@ public class MyUserDatabase {
     }
 
     public void saveData() {
-        File file = new File(".\\test.dat");
+        File file = new File(".\\database.dat");
         try (ObjectOutputStream output = new ObjectOutputStream(
                 new GZIPOutputStream(new FileOutputStream(file)))) {
             output.writeObject(accounts);
@@ -59,7 +59,7 @@ public class MyUserDatabase {
     }
 
     public void loadData() throws IOException {
-        File file = new File(".\\test.dat");
+        File file = new File(".\\database.dat");
         Object readObject;
         try (ObjectInputStream input = new ObjectInputStream(
                 new GZIPInputStream(new FileInputStream(file)));) {
