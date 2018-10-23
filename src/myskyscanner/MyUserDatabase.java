@@ -19,7 +19,9 @@ public class MyUserDatabase {
         accounts = new HashMap<String, MyUser>();
     }
 
-    public boolean addUser(String username, MyUser toAdd) {
+    public boolean addUser(String username, char[] password, String email, String firstName,
+            String lastName, String phone) {
+        MyUser toAdd = new MyUser(username, password, email, firstName, lastName, phone);
         if (accounts.putIfAbsent(username, toAdd) == null) {
             return true;
         }

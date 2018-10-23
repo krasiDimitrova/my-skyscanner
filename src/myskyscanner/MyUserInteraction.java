@@ -37,8 +37,7 @@ public class MyUserInteraction {
 
     private boolean signUp(String username, char[] password, String email, String firstName,
             String lastName, String phone) {
-        MyUser newUser = new MyUser(username, password, email, firstName, lastName, phone);
-        if (accounts.addUser(username, newUser)) {
+        if (accounts.addUser(username, password, email, firstName, lastName, phone)) {
             System.out.println("Your account is ready. Sign in");
             return true;
         } else {
