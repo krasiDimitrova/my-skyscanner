@@ -1,23 +1,15 @@
 package myskyscanner;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class MySkyscanner {
 
-    private MyUserDatabase accounts;
-    private MyUserInteraction interact;
+    private MyUserDatabaseInteraction databaseInteract;
     private boolean quit;
 
     public MySkyscanner() {
         quit = false;
-        accounts = new MyUserDatabase();
-        try {
-            accounts.loadData();
-        } catch (IOException e) {
-            System.out.println("Data couldnot be loaded");
-        }
-        interact = new MyUserInteraction(accounts);
+        databaseInteract = new MyUserDatabaseInteraction();
         System.out.println("Welcome to MySkyscanner." + "\nIf you are a new user, you can signUp."
                 + "\nIf you already have an account go ahead and signIn!"
                 + "\nCurrently available commands are:"
@@ -32,9 +24,12 @@ public class MySkyscanner {
         String command = scanner.nextLine();
         if (command.equals("quit")) {
             quit = true;
-            accounts.saveData();
+            databaseInteract.saveData();
+        } else if (command.equals("signUp") || command.equals("signIn") || command.equals("show")
+                || command.equals("deleteMyProfile") || command.equals("logout")) {
+            databaseInteract.getUserCommand(scanner, command);
         } else {
-            interact.getUserCommand(scanner, command);
+            System.out.println("MySkyscanner does not support such option, yet!");
         }
     }
 

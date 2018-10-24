@@ -1,4 +1,4 @@
-package myskyscanner;
+package myskyscanner.user;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,13 +19,17 @@ public class MyUserDatabase {
         accounts = new HashMap<String, MyUser>();
     }
 
-    public boolean addUser(String username, char[] password, String email, String firstName,
-            String lastName, String phone) {
-        MyUser toAdd = new MyUser(username, password, email, firstName, lastName, phone);
+    public boolean addUser(String username, char[] password, Role role, String email,
+            String firstName, String lastName, String phone) {
+        MyUser toAdd = new MyUser(username, password, role, email, firstName, lastName, phone);
         if (accounts.putIfAbsent(username, toAdd) == null) {
             return true;
         }
         return false;
+    }
+
+    public boolean userIsAdmin(String username) {
+        return accounts.get(username).isAdmin();
     }
 
     public boolean delete(String username) {

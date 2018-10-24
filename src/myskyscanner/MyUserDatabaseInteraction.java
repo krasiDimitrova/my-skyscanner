@@ -1,17 +1,33 @@
 package myskyscanner;
 
+import java.io.IOException;
 import java.util.Scanner;
 
+import myskyscanner.user.MyUserDatabase;
+import myskyscanner.user.Role;
 import password.PasswordEncryption;
 
-public class MyUserInteraction {
+public class MyUserDatabaseInteraction {
 
     private MyUserDatabase accounts;
     private String currentUser;
 
-    public MyUserInteraction(MyUserDatabase accounts) {
-        this.accounts = accounts;
+    public MyUserDatabaseInteraction() {
+        accounts = new MyUserDatabase();
+        try {
+            accounts.loadData();
+        } catch (IOException e) {
+            System.out.println("Data couldnot be loaded");
+        }
         currentUser = null;
+    }
+
+    public boolean currentUserIsAdmin() {
+        return accounts.userIsAdmin(currentUser);
+    }
+
+    public void saveData() {
+        accounts.saveData();
     }
 
     public void printUsers() {
@@ -35,9 +51,9 @@ public class MyUserInteraction {
         System.out.println("Welcome, " + username);
     }
 
-    private boolean signUp(String username, char[] password, String email, String firstName,
-            String lastName, String phone) {
-        if (accounts.addUser(username, password, email, firstName, lastName, phone)) {
+    private boolean signUp(String username, char[] password, Role role, String email,
+            String firstName, String lastName, String phone) {
+        if (accounts.addUser(username, password, role, email, firstName, lastName, phone)) {
             System.out.println("Your account is ready. Sign in");
             return true;
         } else {
@@ -110,6 +126,14 @@ public class MyUserInteraction {
         char[] password;
         password = scanner.nextLine().toCharArray();
         password = encryptPass(password);
+        System.out.println("Choose role. Enter c for customer or a for admin:");
+        String r = scanner.nextLine();
+        Role role;
+        if (r.equals("a")) {
+            role = Role.Admin;
+        } else {
+            role = Role.Customer;
+        }
         System.out.println("The next fields are optional. If you want to pass them press enter");
         System.out.println("Enter email: ");
         String email;
@@ -123,7 +147,7 @@ public class MyUserInteraction {
         System.out.println("Enter Phone: ");
         String phone;
         phone = scanner.nextLine();
-        signUp(username, password, email, firstname, lastname, phone);
+        signUp(username, password, role, email, firstname, lastname, phone);
     }
 
     private void getDeletePass(Scanner scanner) {
@@ -166,7 +190,7 @@ public class MyUserInteraction {
                 break;
             }
             default: {
-                System.out.println("MySkyscanner does not support such option, yet!");
+                break;
             }
         }
     }

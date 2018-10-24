@@ -1,4 +1,4 @@
-package myskyscanner;
+package myskyscanner.user;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -12,11 +12,13 @@ public class MyUser implements Serializable {
     private String firstName;
     private String lastName;
     private String phone;
+    private Role role;
 
-    public MyUser(String username, char[] password, String email, String firstName, String lastName,
-            String phone) {
+    public MyUser(String username, char[] password, Role role, String email, String firstName,
+            String lastName, String phone) {
         this.username = username;
         this.password = password;
+        this.role = role;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,5 +41,9 @@ public class MyUser implements Serializable {
 
     public boolean validatePass(char[] passToCheck) {
         return Arrays.equals(password, passToCheck);
+    }
+
+    public boolean isAdmin() {
+        return role.equals(Role.Admin);
     }
 }
