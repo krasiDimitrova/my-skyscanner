@@ -34,6 +34,10 @@ public class MyUserDatabaseInteraction {
         accounts.printUsers();
     }
 
+    public String getCurUsername() {
+        return currentUser;
+    }
+
     private char[] encryptPass(char[] pass) {
         return PasswordEncryption.encryptPassword(pass);
     }
