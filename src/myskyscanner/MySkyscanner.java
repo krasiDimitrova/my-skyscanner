@@ -30,9 +30,14 @@ public class MySkyscanner {
             quit = true;
             databaseInteract.saveData();
             flightDatabase.saveData();
-        } else if (command.equals("signUp") || command.equals("signIn") || command.equals("show")
+        } else if (command.equals("signIn")) {
+            boolean logged = databaseInteract.getUserCommand(scanner, command);
+            if (logged) {
+                flightDatabase.printNotifyMeAbout(databaseInteract.getNotifyList());
+            }
+        } else if (command.equals("signUp") || command.equals("show")
                 || command.equals("deleteMyProfile") || command.equals("logout")
-                || command.equals("print")) {
+                || command.equals("print") || command.equals("notifyMeAbout")) {
             databaseInteract.getUserCommand(scanner, command);
         } else if (command.equals("addFlight") || command.equals("removeFlight")) {
             if (databaseInteract.currentUserIsAdmin()) {

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -60,6 +61,18 @@ public class MyFlightDatabase {
                 flight -> flight.getFrom().equals(fromCity) && flight.getTo().equals(toCity))
                 .sorted((f1, f2) -> Double.compare(f1.getMinPrice(), f2.getMinPrice()))
                 .forEach(flight -> flight.printFLightMinInfo());
+    }
+
+    public void notifyAboutFlights(String fromCity, String toCity) {
+        System.out.println("Flights from " + fromCity + " to " + toCity);
+        List<MyFlight> fList = new ArrayList<MyFlight>(flights.values());
+        fList = fList.stream().filter(
+                flight -> flight.getFrom().equals(fromCity) && flight.getTo().equals(toCity))
+                .sorted((f1, f2) -> Double.compare(f1.getMinPrice(), f2.getMinPrice()))
+                .collect(Collectors.toList());
+        for (int i = 0; i < 5 && i < fList.size(); i++) {
+            fList.get(i).printFLightMinInfo();
+        }
     }
 
     public void saveData() {

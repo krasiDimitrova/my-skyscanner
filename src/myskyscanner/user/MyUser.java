@@ -1,7 +1,9 @@
 package myskyscanner.user;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MyUser implements Serializable {
 
@@ -13,6 +15,7 @@ public class MyUser implements Serializable {
     private String lastName;
     private String phone;
     private Role role;
+    private List<String> notifyLocations;
 
     public MyUser(String username, char[] password, Role role, String email, String firstName,
             String lastName, String phone) {
@@ -23,6 +26,7 @@ public class MyUser implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
+        this.notifyLocations = new ArrayList<String>();
     }
 
     public void print() {
@@ -45,5 +49,15 @@ public class MyUser implements Serializable {
 
     public boolean isAdmin() {
         return role.equals(Role.Admin);
+    }
+
+    public void addStartEndLoc(String start, String end) {
+        notifyLocations.add(start);
+        notifyLocations.add(end);
+    }
+
+    public List<String> getLocations() {
+        List<String> loc = new ArrayList<String>(notifyLocations);
+        return loc;
     }
 }

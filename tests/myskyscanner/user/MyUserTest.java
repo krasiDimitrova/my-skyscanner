@@ -1,7 +1,11 @@
 package myskyscanner.user;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -35,5 +39,19 @@ public class MyUserTest {
         MyUser test = new MyUser("test", pass, Role.Customer, null, null, null, null);
         char[] pas1 = { 's', '@', '*', '2' };
         assertFalse(test.validatePass(pas1));
+    }
+
+    @Test
+    public void getLocations_addLocationsForNotify_listContainingThem() {
+        char[] pass = { 'p', 'a', '!', '?', '1', '+' };
+        MyUser test = new MyUser("test", pass, Role.Customer, null, null, null, null);
+        test.addStartEndLoc("Sofia", "London");
+        test.addStartEndLoc("London", "Sofia");
+        List<String> expected = new ArrayList<String>();
+        expected.add("Sofia");
+        expected.add("London");
+        expected.add("London");
+        expected.add("Sofia");
+        assertEquals(expected, test.getLocations());
     }
 }

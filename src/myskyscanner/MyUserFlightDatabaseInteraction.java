@@ -3,6 +3,7 @@ package myskyscanner;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
 import javax.naming.directory.InvalidAttributesException;
@@ -117,5 +118,10 @@ public class MyUserFlightDatabaseInteraction {
 
     public void getUserCommand(Scanner scanner, String command, String cUsername) {
         getUserInput(scanner, command, cUsername);
+    }
+
+    public void printNotifyMeAbout(List<String> locations) {
+        for (int i = 0; i < locations.size(); i += 2)
+            flights.notifyAboutFlights(locations.get(i), locations.get(i + 1));
     }
 }

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
@@ -52,6 +53,14 @@ public class MyUserDatabase {
 
     public void showUserInfo(String username) {
         accounts.get(username).print();
+    }
+
+    public void addStartEndLoc(String username, String start, String end) {
+        accounts.get(username).addStartEndLoc(start, end);
+    }
+
+    public List<String> getLocations(String username) {
+        return accounts.get(username).getLocations();
     }
 
     public void saveData() {

@@ -1,6 +1,7 @@
 package myskyscanner;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 import myskyscanner.user.MyUserDatabase;
@@ -50,9 +51,10 @@ public class MyUserDatabaseInteraction {
         return accounts.checkPass(username, pass);
     }
 
-    private void signIn(String username) {
+    private boolean signIn(String username) {
         currentUser = username;
         System.out.println("Welcome, " + username);
+        return true;
     }
 
     private boolean signUp(String username, char[] password, Role role, String email,
@@ -103,7 +105,7 @@ public class MyUserDatabaseInteraction {
         }
     }
 
-    private void getSignInInfo(Scanner scanner) {
+    private boolean getSignInInfo(Scanner scanner) {
         System.out.println("Enter username: ");
         String username;
         username = scanner.nextLine();
@@ -114,8 +116,9 @@ public class MyUserDatabaseInteraction {
         if (!getPass(scanner, username)) {
             System.out.println("Invalid password! If you do not own this account create new one!");
         } else {
-            signIn(username);
+            return signIn(username);
         }
+        return false;
     }
 
     private void getSignUpInfo(Scanner scanner) {
@@ -167,11 +170,18 @@ public class MyUserDatabaseInteraction {
         accounts.showUserInfo(currentUser);
     }
 
-    private void getUserInput(Scanner scanner, String command) {
+    private void notifyMeAbout(Scanner scanner) {
+        System.out.println("Enter departure point:");
+        String from = scanner.nextLine();
+        System.out.println("Enter arrival point:");
+        String to = scanner.nextLine();
+        accounts.addStartEndLoc(currentUser, from, to);
+    }
+
+    private boolean getUserInput(Scanner scanner, String command) {
         switch (command) {
             case "signIn": {
-                getSignInInfo(scanner);
-                break;
+                return getSignInInfo(scanner);
             }
             case "logout": {
                 logout();
@@ -189,6 +199,10 @@ public class MyUserDatabaseInteraction {
                 showUserInfo();
                 break;
             }
+            case "notifyMeAbout": {
+                notifyMeAbout(scanner);
+                break;
+            }
             case "print": {
                 printUsers();
                 break;
@@ -197,9 +211,14 @@ public class MyUserDatabaseInteraction {
                 break;
             }
         }
+        return false;
     }
 
-    public void getUserCommand(Scanner scanner, String command) {
-        getUserInput(scanner, command);
+    public boolean getUserCommand(Scanner scanner, String command) {
+        return getUserInput(scanner, command);
+    }
+
+    public List<String> getNotifyList() {
+        return accounts.getLocations(currentUser);
     }
 }
